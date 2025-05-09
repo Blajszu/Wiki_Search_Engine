@@ -67,6 +67,56 @@ Dane są przechowywane w **SQLite** (`database.db`) i zawierają:
 
 </div>
 
+## Opis implementacji
+
+### Architektura rozwiązania
+
+System został zaimplementowany jako usługa HTTP oparta na frameworku Flask, udostępniająca dwa endpointy do wyszukiwania artykułów:
+
+ - /linear_search - wyszukiwanie liniowe z wykorzystaniem podobieństwa cosinusowego
+ - /svd_search - wyszukiwanie z wykorzystaniem dekompozycji SVD (Singular Value Decomposition)
+
+### Przetwarzanie danych
+
+**Źródło danych:**
+
+Dane pochodzą z bazy SQLite zawierającej artykuły z Wikipedii (180k rekordów)
+Baza przechowuje:
+ - Słownik terminów (dictionary)
+ - Artykuły z wektorami TF (articles_180k)
+ - Metadane artykułów (tytuły, linki)
+
+**Przetwarzanie tekstu:**
+
+Czyszczenie tekstu:
+ - Usuwanie znaczników HTML/XML i szablonów Wikipedii
+ - Normalizacja tekstu (usuwanie znaków specjalnych, sprowadzenie do małych liter)
+ - Tokenizacja i lematyzacja przy użyciu WordNetLemmatizer
+ - Filtracja stop words i nieistotnych słów
+
+**Reprezentacja wektorowa:**
+ - Budowa macierzy TF (Term Frequency) w formacie rzadkim (csc_matrix)
+ - Obliczenie wag IDF (Inverse Document Frequency)
+ - Normalizacja wektorów w normie L2
+
+### Mechanizmy wyszukiwania
+
+**1. Wyszukiwanie liniowe (`/linear_search`):**
+
+ - Przetworzenie zapytania do postaci wektora TF-IDF
+ - Obliczenie podobieństwa cosinusowego między wektorem zapytania a artykułami
+ - Sortowanie wyników według malejącego podobieństwa
+ - Pobranie fragmentów artykułów dla najlepszych wyników
+
+**2. Wyszukiwanie z SVD (`/svd_search`):**
+
+ - Dekompozycja macierzy przy użyciu SVD
+ - Redukcja wymiarowości do zadanego ranku k (od 100 do 1000)
+ - Przekształcanie zapytania i dokumentów do postaci zredukowanych wektorów liczbowych
+ - Obliczanie podobieństwa między tymi uproszczonymi reprezentacjami
+
+W praktyce svd nie liczy się za każdym razem przy uruchamianu aplikacji. Wszystkie macierze są obliczone wcześniej i zapisane w plikach `.joblib`, a następnie odpowiednio ładowane podczas wyszukiwania.
+
 ## ▶️ Uruchamianie
 ### Backend (/backend)
 
