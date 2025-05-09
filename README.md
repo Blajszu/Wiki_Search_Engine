@@ -82,7 +82,7 @@ System został zaimplementowany jako usługa HTTP oparta na frameworku Flask, ud
 
 Dane pochodzą z bazy SQLite zawierającej artykuły z Wikipedii (180k rekordów)
 Baza przechowuje:
- - Słownik terminów (dictionary)
+ - Bag of words (dictionary)
  - Artykuły z wektorami TF (articles_180k)
  - Metadane artykułów (tytuły, linki)
 
