@@ -15,7 +15,7 @@ Obsługuje dwa tryby wyszukiwania:
 
 ### 📥 Dane wejściowe
 
-Artykuły zostały wyodrębnione z dumpa Wikipedii przy użyciu **[WikiExtractora](https://github.com/attardi/wikiextractor)**. Łącznie przetworzono **180 000 artykułów**, a korpus zawiera **220 000 słów** po filtracji.
+Artykuły zostały wyodrębnione z dumpa Wikipedii przy użyciu **[WikiExtractora](https://github.com/attardi/wikiextractor)**. Łącznie przetworzono **180 000 artykułów**, a bag fo words zawiera **220 000 słów** po filtracji.
 
 ### 🧹 Przetwarzanie tekstu
 
