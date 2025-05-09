@@ -427,14 +427,6 @@ def svd_search():
     print(f"Returning {len(final_results)} top results with snippets for SVD search (k={current_svd_k}).") # Zmieniono komunikat
     return jsonify(final_results)
 
-
-@app.route('/ann_search', methods=['POST'])
-def ann_search():
-    data = request.get_json()
-    query = data.get('query', '')
-    print(f"ANN search query (other methods): {query}")
-    return jsonify({"message": "Other ANN Search methods are not yet implemented.", "query": query, "results": []})
-
 load_data()
 
 if __name__ == '__main__':
